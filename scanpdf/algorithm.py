@@ -46,7 +46,7 @@ class ScanPDF:
             ], },
             {"name": "Image processing", "type": "group", "children": [
                 {'name': 'Skip empty pages', 'type': 'bool', 'value': True, 'tip': "Show images"},
-                {'name': 'Fix orientation', 'type': 'bool', 'value': True, 'tip': "Show images"},
+                {'name': 'Fix orientation', 'type': 'bool', 'value': False, 'tip': "Show images"},
                 # {'name': 'Turn odd pages', 'type': 'bool', 'value': True, 'tip': "Show images"},
                 # {'name': 'Turn even pages', 'type': 'bool', 'value': False, 'tip': "Show images"},
             ], },
@@ -71,8 +71,8 @@ class ScanPDF:
             {"name": "Make PDF", "type": "group", "children": [
                 {'name': 'Split file names', 'type': 'text', 'value': '1: Default', "tip": "Line format\n[Page number]: [File name without pdf extension]"},
                 {'name': "Auto split suggestion", 'type': 'action'},
-                {'name': 'Skip empty pages', 'type': 'bool', 'value': True, 'tip': "Show images"},
-                {'name': 'Fix orientation', 'type': 'bool', 'value': True, 'tip': "Show images"},
+                # {'name': 'Skip empty pages', 'type': 'bool', 'value': True, 'tip': "Show images"},
+                # {'name': 'Fix orientation', 'type': 'bool', 'value': False, 'tip': "Show images"},
                 # {'name': 'Turn odd pages', 'type': 'bool', 'value': True, 'tip': "Show images"},
                 # {'name': 'Turn even pages', 'type': 'bool', 'value': False, 'tip': "Show images"},
             ], },
@@ -103,10 +103,10 @@ class ScanPDF:
             text = tesserocr.image_to_text(imcr)
             text = text.strip()
             text = re.sub('"', '', text)
-            text = re.sub(r"['‘’?§;,>“—-]:", '', text)
+            text = re.sub(r"['‘’?§;,>“—\-:\(\)]", ' ', text)
             text = re.sub(r"\s+", ' ', text)
             #     text = re.sub(r"^\s*\n", '', text)
-            #     text = re.sub(' +', ' ', text)
+            # text = re.sub(' +', ' ', text)
             #     text = re.sub(r'\n\s*\n', r'\n', text)
             text = re.sub(r'^\s*\d+[\s\d]*$', '', text)
 
@@ -207,12 +207,20 @@ class ScanPDF:
         data = ruamel.yaml.load(yaml_text)
         print(data)
         im_list = []
-        for fn in fns:
+        for i, fn in enumerate(fns):
+            pagenum = i + 1
+            if pagenum in data:
+                #
+                if len(im_list) > 0:
+                    im0 = im_list.pop(0)
+                    im0.save(pdf_filename, "PDF", resolution=100.0, save_all=True, append_images=im_list)
+
+                fn = data[pagenum] + ".pdf"
+                pdf_filename = op.join(op.dirname(self.output_dir), fn)
+                im_list = []
             im = Image.open(fn)
             im_list.append(im)
 
-        im0 = im_list.pop(0)
-        im0.save(pdf_filename, "PDF", resolution=100.0, save_all=True, append_images=im_list)
 
 
     # def set_annotation_color_selection(self, color):

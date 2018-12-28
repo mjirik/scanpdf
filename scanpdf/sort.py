@@ -67,6 +67,10 @@ def sort_write_output(processing_params, output_path):
 
          # = processing_params[i]
         new_short_fn = '{:04d}'.format(inew) + ext
+        print(new_short_fn, inew, ppars["empty"], fn[-10:])
+        if ppars["empty"]:
+            new_short_fn = "empty_" + new_short_fn
+            # continue
         new_fn = op.join(output_path, new_short_fn)
         im = skimage.io.imread(fn)
         if turn:

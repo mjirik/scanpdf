@@ -14,20 +14,31 @@ import skimage.transform
 import skimage.io
 import scanpdf.deskew
 
-def skip_empty(processing_params):
+
+def skip_empty(processing_params, margin_percent=5, black_threshold=0.85, pixel_number_threshold=0.002):
     empty_pages = 0
     for i, ppars in enumerate(processing_params):
         im = plt.imread(ppars["fn"])
         img = skimage.color.rgb2gray(im)
-        black_pixels = np.sum(img < 0.9) / np.prod(img.shape)
-        if black_pixels < 0.005:
+
+        margin = ((0.01 * margin_percent) * np.asarray(img.shape)).astype(np.int)
+        img = img[
+              margin[0]:-margin[0],
+              margin[1]:-margin[1]
+              ]
+        black_pixels = np.sum(img < black_threshold) / np.prod(img.shape)
+        dbg_inew = ppars["inew"]
+        if black_pixels < pixel_number_threshold:
             # empty page
-            processing_params.pop(i)
-            print("empty page ", ppars["fn"])
+            # processing_params.pop(i)
+            ppars["empty"] = True
+            #print("empty page ", ppars["fn"])
             empty_pages += 1
         else:
             # normal page
             ppars["inew"] = ppars["inew"] - empty_pages
+            ppars["empty"] = False
+        print("skip empty", ppars["empty"], i, dbg_inew, ppars["inew"], ppars["fn"][-10:])
     return processing_params
 
 
