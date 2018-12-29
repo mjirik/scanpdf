@@ -197,10 +197,14 @@ class ScanPDF:
         self.output_dir = scanpdf.sort.make_output_dir(path)
         pdf_filename = self.parameters.param("Input", "Dir Path").value() + ".pdf"
         # fns = glob.glob(op.join(jpgs_path, "*"))
-        types = ('*.png', '*.jpg', "*.jpeg", "*.bmp")  # the tuple of file types
+        types = ('*.png', '*.jpg', "*.jpeg", "*.bmp",
+                 '*.PNG', '*.JPG', "*.JPEG", "*.BMP"
+                 )  # the tuple of file types
         files_grabbed = []
         for files in types:
             files_grabbed.extend(glob.glob(op.join(self.output_dir, files)))
+
+        files_grabbed = [fn for fn in files_grabbed if not fn.startswith("_empty_")]
         files_grabbed  # the list of pdf and cpp files
         fns = files_grabbed
         yaml_text = self.parameters.param("Make PDF", "Split file names").value()
