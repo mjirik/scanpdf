@@ -197,17 +197,21 @@ class ScanPDF:
         pdf_filename = self.parameters.param("Input", "Dir Path").value() + ".pdf"
         # fns = glob.glob(op.join(jpgs_path, "*"))
         types = ('*.png', '*.jpg', "*.jpeg", "*.bmp",
-                 '*.PNG', '*.JPG', "*.JPEG", "*.BMP"
+                 # '*.PNG', '*.JPG', "*.JPEG", "*.BMP"
                  )  # the tuple of file types
         files_grabbed = []
         for files in types:
             files_grabbed.extend(glob.glob(op.join(self.output_dir, files)))
 
-        files_grabbed = [fn for fn in files_grabbed if not fn.startswith("_empty_")]
+        print(files_grabbed)
+        files_grabbed = [fn for fn in files_grabbed if not op.basename(fn).startswith("_empty_")]
+
         files_grabbed  # the list of pdf and cpp files
+        print("=====")
+        print(files_grabbed)
         fns = files_grabbed
         yaml_text = self.parameters.param("Make PDF", "Split file names").value()
-        data = ruamel.yaml.load(yaml_text)
+        data = ruamel.yaml.load(yaml_text, Loader=ruamel.yaml.Loader)
         # print(data)
         im_list = []
         for i, fn in enumerate(fns):
@@ -223,6 +227,7 @@ class ScanPDF:
                 im_list = []
             im = Image.open(fn)
             im_list.append(im)
+            # print("len im list", len(im_list), pdf_filename)
 
         # save last part
         if len(im_list) > 0:
