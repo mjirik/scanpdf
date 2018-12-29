@@ -38,7 +38,8 @@ def skip_empty(processing_params, margin_percent=5, black_threshold=0.85, pixel_
             # normal page
             ppars["inew"] = ppars["inew"] - empty_pages
             ppars["empty"] = False
-        logger.debug("skip empty {} {} {} {} {} {}".format(ppars["empty"], i, dbg_inew, ppars["inew"], ppars["fn"][-10:]))
+        logger.debug("skip empty {} {} {} {} {}".format(
+            ppars["empty"], i, dbg_inew, ppars["inew"], ppars["fn"][-10:]))
     return processing_params
 
 
