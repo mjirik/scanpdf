@@ -38,14 +38,18 @@ build:
 requirements:
   build:
     - python=3
+    - numpy
     - setuptools
     - scikit-image
     - pyqt=5
     - ruamel.yaml
     - pyqtgraph
+    - tesseract
+    - tesserocr
 
   run:
     - python=3
+    - numpy
     - scikit-image
     - pyqt=5
     - ruamel.yaml
