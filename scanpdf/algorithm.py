@@ -224,47 +224,10 @@ class ScanPDF:
             im = Image.open(fn)
             im_list.append(im)
 
-
-
-    # def set_annotation_color_selection(self, color):
-    #     pcolor = self.parameters.param("Input", "Annotation Color")
-    #     color = color.upper()
-    #     if color in pcolor.reverse[0]:
-    #         # val = pcolor.reverse[0].index(color)
-    #         # pcolor.setValue(val)
-    #         pcolor.setValue(color)
-    #     else:
-    #         raise ValueError("Color '{}' not found in allowed colors.".format(color))
-
-    #
-    #
-    # def run_lobuluses(self, color=None):
-    #     self.init_run()
-    #     pcolor = self.parameters.param("Input", "Annotation Color")
-    #     print("color ", pcolor.value())
-    #     # color = pcolor.reverse[0][pcolor.value()]
-    #     color = pcolor.value()
-    #     # print("Color ", color)
-    #     # fnparam = self.parameters.param("Input", "File Path")
-    #     # from .image import AnnotatedImage
-    #     # path = self.parameters.param("Input", "File Path")
-    #     # anim = AnnotatedImage(path.value())
-    #     # if color is None:
-    #     #     color = list(self.anim.colors.keys())[0]
-    #     # print(self.anim.colors)
-    #     annotation_ids = self.anim.select_annotations_by_color(color)
-    #     logger.debug("Annotation IDs: {}".format(annotation_ids))
-    #     for id in annotation_ids:
-    #         self._run_lobulus(id)
-    #     self.report.df.to_excel(op.join(self.report.outputdir, "data.xlsx"))
-    #
-    #     # print("ann ids", annotation_ids)
-    # def _run_lobulus(self, annotation_id):
-    #     show = self.parameters.param("Processing", "Show").value()
-    #     lobulus = scaffan.lobulus.Lobulus(self.anim, annotation_id, report=self.report)
-    #     lobulus.find_border(show=show)
-    #     pass
-
+        # save last part
+        if len(im_list) > 0:
+            im0 = im_list.pop(0)
+            im0.save(pdf_filename, "PDF", resolution=100.0, save_all=True, append_images=im_list)
 
     def start_gui(self):
 
