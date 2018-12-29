@@ -37,11 +37,21 @@ build:
 
 requirements:
   build:
-    - python
+    - python=3
     - setuptools
+    - scikit-image
+    - pyqt=5
+    - ruamel.yaml
+    - pyqtgraph
 
   run:
-    - python
+    - python=3
+    - scikit-image
+    - pyqt=5
+    - ruamel.yaml
+    - pyqtgraph
+    - tesseract
+    - tesserocr
     # - numpy
     # - pyqt 4.11.*
 
@@ -65,7 +75,7 @@ test:
 about:
   home: https://github.com/mjirik/scanpdf
   license: BSD License
-  summary: 'distribution to pypi and conda'
+  summary: 'Make PDFs from directory with scanned documents'
 
 # See
 # http://docs.continuum.io/conda/build.html for
