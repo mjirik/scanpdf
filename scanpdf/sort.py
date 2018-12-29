@@ -54,7 +54,7 @@ def sort_prepare_parameters(path, reverse_odd_pages=False, reverse_even_pages=Tr
             turn = turn_even_pages
 
         processing_params[inew - 1] = {"inew": inew, "turn": turn, "fn": fn}
-        print(inew, turn, fn)
+        # print(inew, turn, fn)
     return processing_params
 
 
@@ -67,7 +67,7 @@ def sort_write_output(processing_params, output_path):
 
          # = processing_params[i]
         new_short_fn = '{:04d}'.format(inew) + ext
-        print(new_short_fn, inew, ppars["empty"], fn[-10:])
+        # print(new_short_fn, inew, ppars["empty"], fn[-10:])
         if ppars["empty"]:
             new_short_fn = "_empty_" + new_short_fn
             # continue

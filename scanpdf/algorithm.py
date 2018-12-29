@@ -10,10 +10,10 @@ import sys
 import os.path as op
 # import PyQt5
 # import PyQt5.QtWidgets
-print("start 3")
+# print("start 3")
 # from PyQt5.QtWidgets import QApplication, QFileDialog
 # print("start 4")
-print("start 4")
+# print("start 4")
 import pyqtgraph as pg
 import glob
 from pyqtgraph.parametertree import Parameter, ParameterTree
@@ -112,7 +112,7 @@ class ScanPDF:
 
             text = text.strip()
             if len(text) > 0:
-                print(i + 1, ":", text)
+                # print(i + 1, ":", text)
                 data[i + 1] = text
 
         yaml_text = ruamel.yaml.round_trip_dump(data)
@@ -141,7 +141,6 @@ class ScanPDF:
         fnparam = self.parameters.param("Input", "Dir Path")
         fnparam.setValue(fn)
         # import pdb; pdb.set_trace()
-        # print("ahoj")
 
     # def set_output_dir(self, path):
     #     fnparam = self.parameters.param("Output", "Directory Path")
@@ -209,7 +208,7 @@ class ScanPDF:
         fns = files_grabbed
         yaml_text = self.parameters.param("Make PDF", "Split file names").value()
         data = ruamel.yaml.load(yaml_text)
-        print(data)
+        # print(data)
         im_list = []
         for i, fn in enumerate(fns):
             pagenum = i + 1
