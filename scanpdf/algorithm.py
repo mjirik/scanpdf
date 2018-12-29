@@ -70,7 +70,7 @@ class ScanPDF:
             # ], },
             {"name": "Make PDF", "type": "group", "children": [
                 {'name': 'Split file names', 'type': 'text', 'value': '1: Default', "tip": "Line format\n[Page number]: [File name without pdf extension]"},
-                {'name': "Auto split suggestion", 'type': 'action'},
+                {'name': "Automatic title recognition", 'type': 'action'},
                 # {'name': 'Skip empty pages', 'type': 'bool', 'value': True, 'tip': "Show images"},
                 # {'name': 'Fix orientation', 'type': 'bool', 'value': False, 'tip': "Show images"},
                 # {'name': 'Turn odd pages', 'type': 'bool', 'value': True, 'tip': "Show images"},
@@ -218,8 +218,8 @@ class ScanPDF:
                     im0 = im_list.pop(0)
                     im0.save(pdf_filename, "PDF", resolution=100.0, save_all=True, append_images=im_list)
 
-                fn = data[pagenum] + ".pdf"
-                pdf_filename = op.join(op.dirname(self.output_dir), fn)
+                fnpdf = data[pagenum] + ".pdf"
+                pdf_filename = op.join(op.dirname(self.output_dir), fnpdf)
                 im_list = []
             im = Image.open(fn)
             im_list.append(im)
@@ -277,7 +277,7 @@ class ScanPDF:
         self.parameters.param('Input', 'Select').sigActivated.connect(self.select_input_dir_gui)
         self.parameters.param('Make dir with image files').sigActivated.connect(self.make_dir_with_files)
         self.parameters.param("Make PDF's").sigActivated.connect(self.make_pdfs)
-        self.parameters.param("Make PDF", "Auto split suggestion").sigActivated.connect(self.auto_split_file_names)
+        self.parameters.param("Make PDF", "Automatic title recognition").sigActivated.connect(self.auto_split_file_names)
 
         t = ParameterTree()
         t.setParameters(self.parameters, showTop=False)
