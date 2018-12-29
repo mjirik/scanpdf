@@ -7,7 +7,7 @@ PDF from scanned files
 
 2) Install requested packages
 ```commandline
-conda create -n scanpdf -c conda-forge -c mcs07 python=3.6 scikit-image ruamel.yaml pyqtgraph pyqt=5 tesseract tesserocr
+conda create -n scanpdf -c conda-forge -c mcs07 -c mjirik scanpdf
 ```
 
 
